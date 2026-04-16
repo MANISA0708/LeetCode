@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string makeLargestSpecial(string s) {
+        if (s.empty()) return "";
+        vector<string> parts;
+        int cnt = 0, i = 0;
+        for (int j = 0; j < s.size(); ++j) {
+            cnt += (s[j] == '1' ? 1 : -1);
+            if (cnt == 0) {
+                parts.push_back("1" + makeLargestSpecial(s.substr(i + 1, j - i - 1)) + "0");
+                i = j + 1;
+            }
+        }
+        sort(parts.begin(), parts.end(), greater<string>());
+        string res = "";
+        for (const string& p : parts) res += p;
+        return res;
+    }
+};
